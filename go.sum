@@ -1,0 +1,6 @@
+github.com/advanced-go/search v0.0.0-20240514220453-4c01498b6a5b h1:AXE+K1qCSPlr+oM8XsPbDh8DVFuQ7YVu2K7Z6vj1zW0=
+github.com/advanced-go/search v0.0.0-20240514220453-4c01498b6a5b/go.mod h1:E8kpvlgspkwts0AsBYH/aD46r/F6puGdDcvv+BG7mfo=
+github.com/advanced-go/stdlib v0.0.0-20240515111045-d3c1cb57fb47 h1:MlHpwbwQqHEzZMdBw95qfzMF+xH3PffksFSMhJTM7FM=
+github.com/advanced-go/stdlib v0.0.0-20240515111045-d3c1cb57fb47/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
