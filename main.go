@@ -6,6 +6,7 @@ import (
 	http2 "github.com/advanced-go/search/http"
 	"github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
+	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
 	"github.com/advanced-go/stdlib/host"
@@ -93,15 +94,22 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 		return r, false
 	}
 
-	// Initialize host proxy for all HTTP handlers,and add intermediaries
+	// Initialize host Exchange
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
 	err := registerExchanges()
-	//err := host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("google-search", http2.Exchange))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
 	}
+
+	// Initialize HTTP controllers
+	err = registerControllers()
+	if err != nil {
+		log.Printf(err.Error())
+		return r, false
+	}
+
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
@@ -214,10 +222,19 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 }
 
 func registerExchanges() error {
-	err := host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("search", http2.Exchange))
+	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(module.RouteName, http2.Exchange))
 	if err != nil {
 		return err
 	}
+	return nil
+}
 
+func registerControllers() error {
+	for _, ctrl := range http2.Controllers() {
+		err := controller.RegisterController(ctrl)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
