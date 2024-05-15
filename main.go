@@ -208,21 +208,16 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 				//fmt.Fprint(w, "Missing authorization header")
 			}
 		}
-
-
 	*/
 	return &http.Response{StatusCode: http.StatusOK}, core.StatusOK()
 
 }
 
 func registerExchanges() error {
-	err := host.RegisterExchange(module..Path, host.NewAccessLogIntermediary("google-search", http2.Exchange))
+	err := host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("search", http2.Exchange))
 	if err != nil {
 		return err
 	}
-	//err = host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("yahoo-search", http3.Exchange))
-	//if err != nil {
-	//	return err
-	//}
+
 	return nil
 }
