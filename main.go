@@ -142,7 +142,7 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func logger(o *access.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) {
+func logger(o *core.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) {
 	req = access.SafeRequest(req)
 	resp = access.SafeResponse(resp)
 	url, _, _ := access.CreateUrlHostPath(req)
@@ -222,7 +222,7 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 }
 
 func registerExchanges() error {
-	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(module.RouteName, http2.Exchange))
+	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(module.Name, http2.Exchange))
 	if err != nil {
 		return err
 	}
@@ -231,6 +231,7 @@ func registerExchanges() error {
 
 func registerControllers() error {
 	for _, ctrl := range http2.Controllers() {
+		//ctrl.Router.RouteTo().
 		err := controller.RegisterController(ctrl)
 		if err != nil {
 			return err
