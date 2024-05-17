@@ -3,6 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	httpguide "github.com/advanced-go/guidance/http"
+	modguide "github.com/advanced-go/guidance/module"
+	httpobserv "github.com/advanced-go/observation/http"
+	modobserv "github.com/advanced-go/observation/module"
 	http2 "github.com/advanced-go/search/http"
 	"github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
@@ -142,15 +146,17 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func logger(o *core.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) {
+func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, authority, routeName, routeTo string, threshold int, thresholdFlags string) {
 	req = access.SafeRequest(req)
 	resp = access.SafeResponse(resp)
-	url, _, _ := access.CreateUrlHostPath(req)
+	url, host, _ := access.CreateUrlHostPath(req)
+	o.App = access.CreateAuthority(o.App, host)
+	authority = access.CreateAuthority(authority, o.App)
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
 		//"\"zone\":%v, "+
 		//"\"sub-zone\":%v, "+
-		//"\"app\":%v, "+
+		"\"app\":%v, "+
 		//"\"instance-id\":%v, "+
 		"\"traffic\":\"%v\", "+
 		"\"start\":%v, "+
@@ -161,7 +167,7 @@ func logger(o *core.Origin, traffic string, start time.Time, duration time.Durat
 		"\"method\":%v, "+
 		"\"uri\":%v, "+
 		"\"query\":%v, "+
-		//"\"host\":%v, "+
+		"\"authority\":%v, "+
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
 		"\"bytes\":%v, "+
@@ -173,7 +179,7 @@ func logger(o *core.Origin, traffic string, start time.Time, duration time.Durat
 		//access.FmtJsonString(o.Region),
 		//access.FmtJsonString(o.Zone),
 		//access.FmtJsonString(o.SubZone),
-		//access.FmtJsonString(o.App),
+		fmt2.JsonString(o.App),
 		//access.FmtJsonString(o.InstanceId),
 
 		traffic,
@@ -186,7 +192,7 @@ func logger(o *core.Origin, traffic string, start time.Time, duration time.Durat
 		fmt2.JsonString(req.Method),
 		fmt2.JsonString(url),
 		fmt2.JsonString(req.URL.RawQuery),
-		//fmt2.JsonString(host),
+		fmt2.JsonString(authority),
 		//fmt2.JsonString(path),
 
 		resp.StatusCode,
@@ -223,6 +229,14 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 
 func registerExchanges() error {
 	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(module.Name, http2.Exchange))
+	if err != nil {
+		return err
+	}
+	err = host.RegisterExchange(modguide.Authority, host.NewAccessLogIntermediary(modguide.Name, httpguide.Exchange))
+	if err != nil {
+		return err
+	}
+	err = host.RegisterExchange(modobserv.Authority, host.NewAccessLogIntermediary(modobserv.Name, httpobserv.Exchange))
 	if err != nil {
 		return err
 	}
