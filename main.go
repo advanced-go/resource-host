@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	httpguide "github.com/advanced-go/guidance/http"
-	modguide "github.com/advanced-go/guidance/module"
-	httpobserv "github.com/advanced-go/observation/http"
-	modobserv "github.com/advanced-go/observation/module"
-	http2 "github.com/advanced-go/search/http"
-	"github.com/advanced-go/search/module"
+	guidehttp "github.com/advanced-go/guidance/http"
+	guidemod "github.com/advanced-go/guidance/module"
+	observhttp "github.com/advanced-go/observation/http"
+	observmod "github.com/advanced-go/observation/module"
+	searchhttp "github.com/advanced-go/search/http"
+	searchmod "github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
 	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
@@ -150,13 +150,14 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 	req = access.SafeRequest(req)
 	resp = access.SafeResponse(resp)
 	url, host, _ := access.CreateUrlHostPath(req)
-	o.App = access.CreateAuthority(o.App, host)
-	authority = access.CreateAuthority(authority, o.App)
+	o.Host = access.Conditional(o.Host, host)
+	authority = access.Conditional(authority, o.Host)
+
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
 		//"\"zone\":%v, "+
 		//"\"sub-zone\":%v, "+
-		"\"app\":%v, "+
+		//"\"app\":%v, "+
 		//"\"instance-id\":%v, "+
 		"\"traffic\":\"%v\", "+
 		"\"start\":%v, "+
@@ -165,9 +166,10 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		//"\"relates-to\":%v, "+
 		//"\"proto\":%v, "+
 		"\"method\":%v, "+
+		"\"host\":%v, "+
+		"\"authority\":%v, "+
 		"\"uri\":%v, "+
 		"\"query\":%v, "+
-		"\"authority\":%v, "+
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
 		"\"bytes\":%v, "+
@@ -176,23 +178,25 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		//"\"route-to\":%v, "+
 		"\"threshold\":%v, "+
 		"\"threshold-flags\":%v }",
-		//access.FmtJsonString(o.Region),
-		//access.FmtJsonString(o.Zone),
-		//access.FmtJsonString(o.SubZone),
-		fmt2.JsonString(o.App),
-		//access.FmtJsonString(o.InstanceId),
+		//fmt2.JsonString(o.Region),
+		//fmt2.JsonString(o.Zone),
+		//fmt2.JsonString(o.SubZone),
+		//fmt2.JsonString(o.App),
+		//fmt2.JsonString(o.InstanceId),
 
 		traffic,
 		fmt2.FmtRFC3339Millis(start),
 		strconv.Itoa(access.Milliseconds(duration)),
 
 		fmt2.JsonString(req.Header.Get(httpx.XRequestId)),
-		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),
-		//access.FmtJsonString(req.Proto),
+		//fmt2.JsonString(req.Header.Get(httpx.XRelatesTo)),
+		//fmt2.JsonString(req.Proto),
 		fmt2.JsonString(req.Method),
+		fmt2.JsonString(o.Host),
+		fmt2.JsonString(authority),
 		fmt2.JsonString(url),
 		fmt2.JsonString(req.URL.RawQuery),
-		fmt2.JsonString(authority),
+
 		//fmt2.JsonString(path),
 
 		resp.StatusCode,
@@ -202,10 +206,8 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 
 		fmt2.JsonString(routeName),
 		//fmt2.JsonString(routeTo),
-
 		threshold,
 		fmt2.JsonString(thresholdFlags),
-		//fmt2.JsonString(routeName),
 	)
 	fmt.Printf("%v\n", s)
 	//return s
@@ -228,15 +230,15 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 }
 
 func registerExchanges() error {
-	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(module.Name, http2.Exchange))
+	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.Name, searchhttp.Exchange))
 	if err != nil {
 		return err
 	}
-	err = host.RegisterExchange(modguide.Authority, host.NewAccessLogIntermediary(modguide.Name, httpguide.Exchange))
+	err = host.RegisterExchange(guidemod.Authority, host.NewAccessLogIntermediary(guidemod.Name, guidehttp.Exchange))
 	if err != nil {
 		return err
 	}
-	err = host.RegisterExchange(modobserv.Authority, host.NewAccessLogIntermediary(modobserv.Name, httpobserv.Exchange))
+	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.Name, observhttp.Exchange))
 	if err != nil {
 		return err
 	}
@@ -244,8 +246,10 @@ func registerExchanges() error {
 }
 
 func registerControllers() error {
-	for _, ctrl := range http2.Controllers() {
-		//ctrl.Router.RouteTo().
+	for _, ctrl := range searchhttp.Controllers() {
+		//if ctrl.Name == "yahoo-search" {
+		//	ctrl.Router.Primary.Duration = time.Millisecond * 5
+		//}
 		err := controller.RegisterController(ctrl)
 		if err != nil {
 			return err
