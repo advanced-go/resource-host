@@ -10,11 +10,11 @@ import (
 	searchhttp "github.com/advanced-go/search/http"
 	searchmod "github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
-	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
 	"github.com/advanced-go/stdlib/host"
 	"github.com/advanced-go/stdlib/httpx"
+	"github.com/advanced-go/stdlib/uri"
 	"log"
 	"net/http"
 	"os"
@@ -149,15 +149,17 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, authority, routeName, routeTo string, threshold int, thresholdFlags string) {
 	req = access.SafeRequest(req)
 	resp = access.SafeResponse(resp)
-	url, host, _ := access.CreateUrlHostPath(req)
-	o.Host = access.Conditional(o.Host, host)
+	url, parsed := uri.ParseURL(req.Host, req.URL)
+	o.Host = access.Conditional(o.Host, parsed.Host)
 	authority = access.Conditional(authority, o.Host)
+	//url, host, path, query := access.CreateURLComponents(req)
+	//o.Host = access.Conditional(o.Host, host)
+	//authority = access.Conditional(authority, o.Host)
 
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
 		//"\"zone\":%v, "+
 		//"\"sub-zone\":%v, "+
-		//"\"app\":%v, "+
 		//"\"instance-id\":%v, "+
 		"\"traffic\":\"%v\", "+
 		"\"start\":%v, "+
@@ -195,7 +197,7 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		fmt2.JsonString(o.Host),
 		fmt2.JsonString(authority),
 		fmt2.JsonString(url),
-		fmt2.JsonString(req.URL.RawQuery),
+		fmt2.JsonString(parsed.Query),
 
 		//fmt2.JsonString(path),
 
@@ -246,14 +248,12 @@ func registerExchanges() error {
 }
 
 func registerControllers() error {
-	for _, ctrl := range searchhttp.Controllers() {
-		//if ctrl.Name == "yahoo-search" {
-		//	ctrl.Router.Primary.Duration = time.Millisecond * 5
-		//}
-		err := controller.RegisterController(ctrl)
-		if err != nil {
-			return err
-		}
-	}
+	//ctrl := searchhttp.
+	//for _, ctrl := range searchhttp.Controllers() {
+	//	err := controller.RegisterController(ctrl)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 	return nil
 }

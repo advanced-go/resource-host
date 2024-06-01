@@ -12,6 +12,8 @@ github.com/advanced-go/guidance v0.0.0-20240519171856-e8b30968a00b h1:PSuResXwj8
 github.com/advanced-go/guidance v0.0.0-20240519171856-e8b30968a00b/go.mod h1:cm1680UZ5CIraSgm9upyxcSnqYhFdxRbV1afUkI1MeE=
 github.com/advanced-go/guidance v0.0.0-20240519191605-da45f5e48a90 h1:mtMpcTwU3oWfschFSagAMH+tLj6AMqIzvGcHU8tzpnA=
 github.com/advanced-go/guidance v0.0.0-20240519191605-da45f5e48a90/go.mod h1:CXLFwkEGcefVmLhQhitsiAjlss3vOMppBY4ylTQxM1c=
+github.com/advanced-go/guidance v0.0.0-20240601131422-141209af412e h1:eoFk61g2nrzXiAy7uiQHZCnARb7/zgOBbPcpBfFMO28=
+github.com/advanced-go/guidance v0.0.0-20240601131422-141209af412e/go.mod h1:2Bs/NW6+a/i13CHbt85byHJG6ZLcFvxJekjQuCk2Ajs=
 github.com/advanced-go/observation v0.0.0-20240516191447-6a3991cf4782 h1:MPNtmeDny1iXL0HZY2FzVv0OStHLXUP53eH4n87cDkQ=
 github.com/advanced-go/observation v0.0.0-20240516191447-6a3991cf4782/go.mod h1:quNQ0TNIg04QMykOKGL+ftMQP7EqN4syqOX/M9nJe40=
 github.com/advanced-go/observation v0.0.0-20240516192254-28ce898d328e h1:v5tILqlLTxNV8PvZuRx/sJw7wGFNsbefxD0FowfdaOY=
@@ -26,6 +28,8 @@ github.com/advanced-go/observation v0.0.0-20240519171838-6b25798d99da h1:cJmA4wh
 github.com/advanced-go/observation v0.0.0-20240519171838-6b25798d99da/go.mod h1:Go2LFhYsEmtZtwV/sTP4fwGyVnMezXfISgwpy+OF06k=
 github.com/advanced-go/observation v0.0.0-20240519191521-1099f68fcdad h1:CFtWgJlTXSQC5AAOHXFIWZzWAL7TI2B3wsh/Ua5xk40=
 github.com/advanced-go/observation v0.0.0-20240519191521-1099f68fcdad/go.mod h1:jK6DbHElS4nnMnc5ZoFXoBt1EZiw0lMHOCbfdhhPCFQ=
+github.com/advanced-go/observation v0.0.0-20240601133255-39bcde1ef750 h1:VceFnE+tC5RduC+v5tuTlAO68pZDKLhQhEu65hX1RUg=
+github.com/advanced-go/observation v0.0.0-20240601133255-39bcde1ef750/go.mod h1:W+1tNGIxvA4pgTd6nkXwQ6w511HSoAWzMEkzSfUOjsE=
 github.com/advanced-go/search v0.0.0-20240514220453-4c01498b6a5b h1:AXE+K1qCSPlr+oM8XsPbDh8DVFuQ7YVu2K7Z6vj1zW0=
 github.com/advanced-go/search v0.0.0-20240514220453-4c01498b6a5b/go.mod h1:E8kpvlgspkwts0AsBYH/aD46r/F6puGdDcvv+BG7mfo=
 github.com/advanced-go/search v0.0.0-20240515133902-dbe5d7df634e h1:XRJRKbZSjPGkMWhOH2NFyRqvk1R93jHotuDBdo1ZEWQ=
@@ -50,6 +54,8 @@ github.com/advanced-go/search v0.0.0-20240519171504-25f170c32864 h1:2+fYzoYbezgS
 github.com/advanced-go/search v0.0.0-20240519171504-25f170c32864/go.mod h1:HzsHfFbA0bIGBBmgProG89kvEe7+UUgzW3uJ75lPFMo=
 github.com/advanced-go/search v0.0.0-20240519191434-c6bd50ec4c43 h1:JH3Kn5h0/UVHhsQqHV/4SIZrol43p9hqJYG3gvTdi4I=
 github.com/advanced-go/search v0.0.0-20240519191434-c6bd50ec4c43/go.mod h1:vR9r9xe7hbRzqu2sqlD6YZAP/N38ooYl81FFg3qacy4=
+github.com/advanced-go/search v0.0.0-20240531151516-6c9588f2e3d9 h1:zlkC68IA6JKzKJkBuU7CzHx6ocDj14C9E4DZjt/Rks4=
+github.com/advanced-go/search v0.0.0-20240531151516-6c9588f2e3d9/go.mod h1:+pVxeSAU66NXXs50rmjs+EQnqP+aLdtXPti2OGMEb00=
 github.com/advanced-go/stdlib v0.0.0-20240515111045-d3c1cb57fb47 h1:MlHpwbwQqHEzZMdBw95qfzMF+xH3PffksFSMhJTM7FM=
 github.com/advanced-go/stdlib v0.0.0-20240515111045-d3c1cb57fb47/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
 github.com/advanced-go/stdlib v0.0.0-20240515150926-476a06b6e360 h1:1PiY4lCrkrvIDWP8hQ7jAuZzPFkU20gKNVAE76qhoYE=
@@ -70,5 +76,9 @@ github.com/advanced-go/stdlib v0.0.0-20240519163959-f41b549dec3b h1:NjPyLql325y0
 github.com/advanced-go/stdlib v0.0.0-20240519163959-f41b549dec3b/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
 github.com/advanced-go/stdlib v0.0.0-20240519182711-cd0c8c09db48 h1:muP2/7AkI4NzZ+K1Df97h78RCE9nX1vZ++QYSs3r0ww=
 github.com/advanced-go/stdlib v0.0.0-20240519182711-cd0c8c09db48/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
+github.com/advanced-go/stdlib v0.0.0-20240601131407-3088c6e14add h1:LQzumqQZCM+tZNjjHYAA9Rnl4ZDqMknHaRdcrKaaSrE=
+github.com/advanced-go/stdlib v0.0.0-20240601131407-3088c6e14add/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
+github.com/advanced-go/stdlib v0.0.0-20240601164344-f8c9fdf062ca h1:UvpXfcIAhPIIeLw/VXXm9+Gor+o3sMo/O0m6EJ6aj48=
+github.com/advanced-go/stdlib v0.0.0-20240601164344-f8c9fdf062ca/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
