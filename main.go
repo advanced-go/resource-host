@@ -232,15 +232,15 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 }
 
 func registerExchanges() error {
-	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.Name, searchhttp.Exchange))
+	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.RouteName, searchhttp.Exchange))
 	if err != nil {
 		return err
 	}
-	err = host.RegisterExchange(guidemod.Authority, host.NewAccessLogIntermediary(guidemod.Name, guidehttp.Exchange))
+	err = host.RegisterExchange(guidemod.Authority, host.NewAccessLogIntermediary(guidemod.RouteName, guidehttp.Exchange))
 	if err != nil {
 		return err
 	}
-	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.Name, observhttp.Exchange))
+	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.RouteName, observhttp.Exchange))
 	if err != nil {
 		return err
 	}
