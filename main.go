@@ -146,15 +146,11 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, authority, routeName, routeTo string, threshold int, thresholdFlags string) {
-	req = access.SafeRequest(req)
-	resp = access.SafeResponse(resp)
-	url, parsed := uri.ParseURL(req.Host, req.URL)
+func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req any, resp any, routeName, routeTo string, timeout time.Duration, rateLimit float64, rateBurst int, reasonCode string) {
+	newReq := access.BuildRequest(req)
+	newResp := access.BuildResponse(resp)
+	url, parsed := uri.ParseURL(newReq.Host, newReq.URL)
 	o.Host = access.Conditional(o.Host, parsed.Host)
-	authority = access.Conditional(authority, o.Host)
-	//url, host, path, query := access.CreateURLComponents(req)
-	//o.Host = access.Conditional(o.Host, host)
-	//authority = access.Conditional(authority, o.Host)
 
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
@@ -169,7 +165,8 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		//"\"proto\":%v, "+
 		"\"method\":%v, "+
 		"\"host\":%v, "+
-		"\"authority\":%v, "+
+		"\"from\":%v, "+
+		"\"to\":%v, "+
 		"\"uri\":%v, "+
 		"\"query\":%v, "+
 		//"\"path\":%v, "+
@@ -178,8 +175,10 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		"\"encoding\":%v, "+
 		"\"route\":%v, "+
 		//"\"route-to\":%v, "+
-		"\"threshold\":%v, "+
-		"\"threshold-flags\":%v }",
+		"\"timeout\":%v, "+
+		//"\"timeout\":%v, "+
+		//"\"timeout\":%v, "+
+		"\"rc\":%v }",
 		//fmt2.JsonString(o.Region),
 		//fmt2.JsonString(o.Zone),
 		//fmt2.JsonString(o.SubZone),
@@ -188,28 +187,28 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 
 		traffic,
 		fmt2.FmtRFC3339Millis(start),
-		strconv.Itoa(access.Milliseconds(duration)),
+		strconv.Itoa(int(duration/time.Duration(1e6))),
 
-		fmt2.JsonString(req.Header.Get(httpx.XRequestId)),
+		fmt2.JsonString(newReq.Header.Get(httpx.XRequestId)),
 		//fmt2.JsonString(req.Header.Get(httpx.XRelatesTo)),
 		//fmt2.JsonString(req.Proto),
-		fmt2.JsonString(req.Method),
+		fmt2.JsonString(newReq.Method),
 		fmt2.JsonString(o.Host),
-		fmt2.JsonString(authority),
+		fmt2.JsonString(newReq.Header.Get(core.XAuthority)),
+		fmt2.JsonString(uri.UprootAuthority(newReq.URL)),
 		fmt2.JsonString(url),
 		fmt2.JsonString(parsed.Query),
 
 		//fmt2.JsonString(path),
 
-		resp.StatusCode,
-		//fmt2.JsonString(resp.Status),
-		fmt.Sprintf("%v", resp.ContentLength),
-		fmt2.JsonString(access.Encoding(resp)),
+		newResp.StatusCode,
+		fmt.Sprintf("%v", newResp.ContentLength),
+		fmt2.JsonString(access.Encoding(newResp)),
 
 		fmt2.JsonString(routeName),
 		//fmt2.JsonString(routeTo),
-		threshold,
-		fmt2.JsonString(thresholdFlags),
+		int(timeout/time.Duration(1e6)),
+		fmt2.JsonString(reasonCode),
 	)
 	fmt.Printf("%v\n", s)
 	//return s
