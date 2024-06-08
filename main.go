@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	guidehttp "github.com/advanced-go/guidance/http"
 	guidemod "github.com/advanced-go/guidance/module"
@@ -178,7 +177,7 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		//"\"route-to\":%v, "+
 		"\"timeout\":%v, "+
 		"\"rate-limit\":%v, "+
-		"\rate-burst\":%v, "+
+		"\"rate-burst\":%v, "+
 		"\"rc\":%v }",
 		//fmt2.JsonString(o.Region),
 		//fmt2.JsonString(o.Zone),
@@ -250,7 +249,15 @@ func registerExchanges() error {
 }
 
 func registerControllers() error {
-	route := searchmod.GoogleRouteName
+	//status := controller.RegisterControllerFromRoute(searchmod.GoogleRouteName, searchmod.Routes, nil)
+	//if !status.OK() {
+	//	return status.Err
+	//}
+	status := controller.RegisterControllerFromRoute(searchmod.YahooRouteName, searchmod.Routes, nil)
+	if !status.OK() {
+		return status.Err
+	}
+	/*route := searchmod.GoogleRouteName
 	cfg, ok := searchmod.GetRoute(route)
 	if !ok {
 		return errors.New(fmt.Sprintf("error: registerControllers() not found: %v\n", route))
@@ -271,5 +278,7 @@ func registerControllers() error {
 		return err0
 	}
 
+
+	*/
 	return nil
 }
