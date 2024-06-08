@@ -95,14 +95,14 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host Exchange
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
-	err := register.Exchanges()
+	err := register.IngressExchanges()
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
 	}
 
 	// Initialize HTTP controllers
-	err = register.Controllers()
+	err = register.EgressControllers()
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false

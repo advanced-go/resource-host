@@ -1,8 +1,10 @@
 package register
 
 import (
+	dochttp "github.com/advanced-go/documents/http"
 	guidehttp "github.com/advanced-go/guidance/http"
 	guidemod "github.com/advanced-go/guidance/module"
+	"github.com/advanced-go/guidance/resiliency1"
 	observhttp "github.com/advanced-go/observation/http"
 	observmod "github.com/advanced-go/observation/module"
 	"github.com/advanced-go/search/google"
@@ -13,7 +15,7 @@ import (
 	"github.com/advanced-go/stdlib/host"
 )
 
-func Exchanges() error {
+func IngressExchanges() error {
 	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.RouteName, searchhttp.Exchange))
 	if err != nil {
 		return err
@@ -29,12 +31,16 @@ func Exchanges() error {
 	return nil
 }
 
-func Controllers() error {
+func EgressControllers() error {
 	status := controller.RegisterControllerFromConfig(google.Route, nil)
 	if !status.OK() {
 		return status.Err
 	}
 	status = controller.RegisterControllerFromConfig(yahoo.Route, nil)
+	if !status.OK() {
+		return status.Err
+	}
+	status = controller.RegisterControllerFromConfig(resiliency1.Route, dochttp.Exchange)
 	if !status.OK() {
 		return status.Err
 	}
