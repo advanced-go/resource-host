@@ -3,14 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	guidehttp "github.com/advanced-go/guidance/http"
-	guidemod "github.com/advanced-go/guidance/module"
-	observhttp "github.com/advanced-go/observation/http"
-	observmod "github.com/advanced-go/observation/module"
-	searchhttp "github.com/advanced-go/search/http"
-	searchmod "github.com/advanced-go/search/module"
+	"github.com/advanced-go/resource-host/register"
 	"github.com/advanced-go/stdlib/access"
-	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
 	"github.com/advanced-go/stdlib/host"
@@ -92,7 +86,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Override access logger
 	access.SetLogFn(logger)
 
-	// Run host startup where all registered resources/packages will be sent a startup configuration message
+	// Run host register where all registered resources/packages will be sent a register configuration message
 	m := createPackageConfiguration()
 	if !host.Startup(time.Second*4, m) {
 		return r, false
@@ -101,14 +95,14 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host Exchange
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
-	err := registerExchanges()
+	err := register.Exchanges()
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
 	}
 
 	// Initialize HTTP controllers
-	err = registerControllers()
+	err = register.Controllers()
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
@@ -230,55 +224,4 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 	*/
 	return &http.Response{StatusCode: http.StatusOK}, core.StatusOK()
 
-}
-
-func registerExchanges() error {
-	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.RouteName, searchhttp.Exchange))
-	if err != nil {
-		return err
-	}
-	err = host.RegisterExchange(guidemod.Authority, host.NewAccessLogIntermediary(guidemod.RouteName, guidehttp.Exchange))
-	if err != nil {
-		return err
-	}
-	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.RouteName, observhttp.Exchange))
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func registerControllers() error {
-	//status := controller.RegisterControllerFromRoute(searchmod.GoogleRouteName, searchmod.Routes, nil)
-	//if !status.OK() {
-	//	return status.Err
-	//}
-	status := controller.RegisterControllerFromRoute(searchmod.YahooRouteName, searchmod.Routes, nil)
-	if !status.OK() {
-		return status.Err
-	}
-	/*route := searchmod.GoogleRouteName
-	cfg, ok := searchmod.GetRoute(route)
-	if !ok {
-		return errors.New(fmt.Sprintf("error: registerControllers() not found: %v\n", route))
-	}
-	ctrl := controller.New(cfg, nil)
-	err0 := controller.RegisterController(ctrl)
-	if err0 != nil {
-		return err0
-	}
-	route = searchmod.YahooRouteName
-	cfg, ok = searchmod.GetRoute(route)
-	if !ok {
-		return errors.New(fmt.Sprintf("error: registerControllers() not found: %v\n", route))
-	}
-	ctrl = controller.New(cfg, nil)
-	err0 = controller.RegisterController(ctrl)
-	if err0 != nil {
-		return err0
-	}
-
-
-	*/
-	return nil
 }
