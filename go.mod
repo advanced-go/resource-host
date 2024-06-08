@@ -3,10 +3,10 @@ module github.com/advanced-go/resource-host
 go 1.21.4
 
 require (
-	github.com/advanced-go/guidance v0.0.0-20240607124851-436968ef12b6
-	github.com/advanced-go/observation v0.0.0-20240607090424-1aafa55f7945
-	github.com/advanced-go/search v0.0.0-20240607100129-dd347da73103
-	github.com/advanced-go/stdlib v0.0.0-20240607083544-0491deb5c330
+	github.com/advanced-go/guidance v0.0.0-20240608112449-d641e11947f4
+	github.com/advanced-go/observation v0.0.0-20240608112930-bee9f67a59fc
+	github.com/advanced-go/search v0.0.0-20240608113417-22d7e13bdf7d
+	github.com/advanced-go/stdlib v0.0.0-20240608103643-0ad6b93b732e
 )
 
 require github.com/google/uuid v1.6.0 // indirect

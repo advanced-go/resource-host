@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	guidehttp "github.com/advanced-go/guidance/http"
 	guidemod "github.com/advanced-go/guidance/module"
@@ -10,6 +11,7 @@ import (
 	searchhttp "github.com/advanced-go/search/http"
 	searchmod "github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
+	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
 	"github.com/advanced-go/stdlib/host"
@@ -20,7 +22,6 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
-	"strconv"
 	"time"
 )
 
@@ -146,7 +147,7 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req any, resp any, routeName, routeTo string, timeout time.Duration, rateLimit float64, rateBurst int, reasonCode string) {
+func logger(o core.Origin, traffic string, start time.Time, duration time.Duration, req any, resp any, from, routeName, routeTo string, timeout time.Duration, rateLimit float64, rateBurst int, reasonCode string) {
 	newReq := access.BuildRequest(req)
 	newResp := access.BuildResponse(resp)
 	url, parsed := uri.ParseURL(newReq.Host, newReq.URL)
@@ -176,8 +177,8 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		"\"route\":%v, "+
 		//"\"route-to\":%v, "+
 		"\"timeout\":%v, "+
-		//"\"timeout\":%v, "+
-		//"\"timeout\":%v, "+
+		"\"rate-limit\":%v, "+
+		"\rate-burst\":%v, "+
 		"\"rc\":%v }",
 		//fmt2.JsonString(o.Region),
 		//fmt2.JsonString(o.Zone),
@@ -187,14 +188,14 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 
 		traffic,
 		fmt2.FmtRFC3339Millis(start),
-		strconv.Itoa(int(duration/time.Duration(1e6))),
+		access.Milliseconds(duration),
 
 		fmt2.JsonString(newReq.Header.Get(httpx.XRequestId)),
 		//fmt2.JsonString(req.Header.Get(httpx.XRelatesTo)),
 		//fmt2.JsonString(req.Proto),
 		fmt2.JsonString(newReq.Method),
 		fmt2.JsonString(o.Host),
-		fmt2.JsonString(newReq.Header.Get(core.XAuthority)),
+		fmt2.JsonString(from),
 		fmt2.JsonString(uri.UprootAuthority(newReq.URL)),
 		fmt2.JsonString(url),
 		fmt2.JsonString(parsed.Query),
@@ -207,7 +208,9 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 
 		fmt2.JsonString(routeName),
 		//fmt2.JsonString(routeTo),
-		int(timeout/time.Duration(1e6)),
+		access.Milliseconds(timeout),
+		fmt.Sprintf("%v", rateLimit),
+		rateBurst,
 		fmt2.JsonString(reasonCode),
 	)
 	fmt.Printf("%v\n", s)
@@ -247,12 +250,26 @@ func registerExchanges() error {
 }
 
 func registerControllers() error {
-	//ctrl := searchhttp.
-	//for _, ctrl := range searchhttp.Controllers() {
-	//	err := controller.RegisterController(ctrl)
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
+	route := searchmod.GoogleRouteName
+	cfg, ok := searchmod.GetRoute(route)
+	if !ok {
+		return errors.New(fmt.Sprintf("error: registerControllers() not found: %v\n", route))
+	}
+	ctrl := controller.New(cfg, nil)
+	err0 := controller.RegisterController(ctrl)
+	if err0 != nil {
+		return err0
+	}
+	route = searchmod.YahooRouteName
+	cfg, ok = searchmod.GetRoute(route)
+	if !ok {
+		return errors.New(fmt.Sprintf("error: registerControllers() not found: %v\n", route))
+	}
+	ctrl = controller.New(cfg, nil)
+	err0 = controller.RegisterController(ctrl)
+	if err0 != nil {
+		return err0
+	}
+
 	return nil
 }
