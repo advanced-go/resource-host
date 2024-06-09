@@ -3,13 +3,22 @@ module github.com/advanced-go/resource-host
 go 1.21.4
 
 require (
-	github.com/advanced-go/guidance v0.0.0-20240608150844-4a853ee98605
-	github.com/advanced-go/observation v0.0.0-20240608112930-bee9f67a59fc
-	github.com/advanced-go/search v0.0.0-20240608152045-03475f366219
-	github.com/advanced-go/stdlib v0.0.0-20240608145711-2fdb88e7168c
+	github.com/advanced-go/documents v0.0.0-20240609153615-21610d221f66
+	github.com/advanced-go/guidance v0.0.0-20240609153807-2cc983ce5856
+	github.com/advanced-go/observation v0.0.0-20240609154438-7b03aaeeb2bf
+	github.com/advanced-go/search v0.0.0-20240609153521-c8acd38ce2fc
+	github.com/advanced-go/stdlib v0.0.0-20240609152119-8e3aa89b2647
+	github.com/advanced-go/timeseries v0.0.0-20240609153935-ca9296be06c7
 )
 
 require (
-	github.com/advanced-go/documents v0.0.0-20240608115721-dad52579c034 // indirect
+	github.com/advanced-go/postgresql v0.0.0-20240609153351-aef2dfe3329d // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgx/v5 v5.5.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/sync v0.3.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 )
