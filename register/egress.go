@@ -4,37 +4,14 @@ import (
 	"errors"
 	"fmt"
 	dochttp "github.com/advanced-go/documents/http"
-	guidehttp "github.com/advanced-go/guidance/http"
-	guidemod "github.com/advanced-go/guidance/module"
 	"github.com/advanced-go/guidance/resiliency1"
-	observhttp "github.com/advanced-go/observation/http"
-	observmod "github.com/advanced-go/observation/module"
 	"github.com/advanced-go/observation/timeseries1"
 	"github.com/advanced-go/search/google"
-	searchhttp "github.com/advanced-go/search/http"
-	searchmod "github.com/advanced-go/search/module"
 	"github.com/advanced-go/search/yahoo"
 	"github.com/advanced-go/stdlib/controller"
 	"github.com/advanced-go/stdlib/core"
-	"github.com/advanced-go/stdlib/host"
 	timehttp "github.com/advanced-go/timeseries/http"
 )
-
-func IngressExchanges() error {
-	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.RouteName, searchhttp.Exchange))
-	if err != nil {
-		return err
-	}
-	err = host.RegisterExchange(guidemod.Authority, host.NewAccessLogIntermediary(guidemod.RouteName, guidehttp.Exchange))
-	if err != nil {
-		return err
-	}
-	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.RouteName, observhttp.Exchange))
-	if err != nil {
-		return err
-	}
-	return nil
-}
 
 func EgressControllers() error {
 	// Search package's egress
