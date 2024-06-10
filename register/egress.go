@@ -15,21 +15,21 @@ import (
 
 func EgressControllers() error {
 	// Search package's egress
-	err := register(google.RouteName, google.Route, nil)
+	err := register(google.RouteName, google.EgressRoute, nil)
 	if err != nil {
 		return err
 	}
-	err = register(yahoo.RouteName, yahoo.Route, nil)
+	err = register(yahoo.RouteName, yahoo.EgressRoute, nil)
 	if err != nil {
 		return err
 	}
 	// Guidance package's egress
-	err = register(resiliency1.RouteName, resiliency1.Route, dochttp.Exchange)
+	err = register(resiliency1.RouteName, resiliency1.EgressRoute, dochttp.Exchange)
 	if err != nil {
 		return err
 	}
 	// Observation package's egress
-	err = register(timeseries1.RouteName, timeseries1.Route, timehttp.Exchange)
+	err = register(timeseries1.RouteName, timeseries1.EgressRoute, timehttp.Exchange)
 	if err != nil {
 		return err
 	}
