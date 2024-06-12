@@ -14,11 +14,16 @@ github.com/advanced-go/observation v0.0.0-20240609154438-7b03aaeeb2bf h1:uV1fVeK
 github.com/advanced-go/observation v0.0.0-20240609154438-7b03aaeeb2bf/go.mod h1:WVquMDOtsGZtYsYu+HzG1WqV5+vF/hKwvz8WOGc/fKo=
 github.com/advanced-go/observation v0.0.0-20240609173319-636e749bc89b h1:p7kyl/LEuFnKaBW2ChDPFQ2ksCxtUcecSsZptafshr8=
 github.com/advanced-go/observation v0.0.0-20240609173319-636e749bc89b/go.mod h1:WVquMDOtsGZtYsYu+HzG1WqV5+vF/hKwvz8WOGc/fKo=
+github.com/advanced-go/observation v0.0.0-20240612175843-847405307e35 h1:VduzwbZLulm7a1G+MxW62pIF/n8eeOVtHvdxsVq9omU=
+github.com/advanced-go/observation v0.0.0-20240612175843-847405307e35/go.mod h1:gXZWCullBjCJZiV8DRkPX1I7n4H7jWprhy4Su2Bxq2M=
+github.com/advanced-go/observation v0.0.0-20240612190813-748dac7f7cd2 h1:FrteK5JmXG41KvrIAuIuab7/jSEznI+Fa3gbBKwgi2c=
+github.com/advanced-go/observation v0.0.0-20240612190813-748dac7f7cd2/go.mod h1:gXZWCullBjCJZiV8DRkPX1I7n4H7jWprhy4Su2Bxq2M=
 github.com/advanced-go/postgresql v0.0.0-20240609165043-8711c1adbdf9 h1:K5BIjajsx2n+SRGn4PLEBFcW7tdZXbyBOAmCBT0X+Q8=
 github.com/advanced-go/postgresql v0.0.0-20240609165043-8711c1adbdf9/go.mod h1:LXHykuu7PB2+d/gFTUA/glWTd83TN/Q9BUaPDE9ilA4=
 github.com/advanced-go/postgresql v0.0.0-20240609172647-49f1d3541007/go.mod h1:LXHykuu7PB2+d/gFTUA/glWTd83TN/Q9BUaPDE9ilA4=
 github.com/advanced-go/postgresql v0.0.0-20240610131415-8a5c443044c4 h1:+4rWkssBI+Vvn5XmQWJ3y5I+IAaLP2UrlgFXO8quvRE=
 github.com/advanced-go/postgresql v0.0.0-20240610131415-8a5c443044c4/go.mod h1:LXHykuu7PB2+d/gFTUA/glWTd83TN/Q9BUaPDE9ilA4=
+github.com/advanced-go/postgresql v0.0.0-20240612155653-abb42939a6a3/go.mod h1:AzJGrHVWmILSu+O7bdwllP/hHAfvG4xmUaL9LIqEXMQ=
 github.com/advanced-go/search v0.0.0-20240609153521-c8acd38ce2fc h1:uLdRw5DVRUUGMhbbWvqSrOmp0yAUk2zYkcxqiqwVE+c=
 github.com/advanced-go/search v0.0.0-20240609153521-c8acd38ce2fc/go.mod h1:jlX3Qbwj7/hS+7paNNBO7YxxvpnBi69cKTKjbwA765k=
 github.com/advanced-go/search v0.0.0-20240609173240-6f5f3588f036 h1:LUUpWE6afSfkQmRlgEpMKMuhfKBYErRh5QzwDpFSJxo=
