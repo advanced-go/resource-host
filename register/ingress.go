@@ -1,6 +1,8 @@
 package register
 
 import (
+	actvhttp "github.com/advanced-go/activity/http"
+	actvmod "github.com/advanced-go/activity/module"
 	guidehttp "github.com/advanced-go/guidance/http"
 	guidemod "github.com/advanced-go/guidance/module"
 	observhttp "github.com/advanced-go/observation/http"
@@ -20,6 +22,10 @@ func IngressExchange() error {
 		return err
 	}
 	err = host.RegisterExchange(observmod.Authority, host.NewAccessLogIntermediary(observmod.RouteName, observhttp.Exchange))
+	if err != nil {
+		return err
+	}
+	err = host.RegisterExchange(actvmod.Authority, host.NewAccessLogIntermediary(actvmod.RouteName, actvhttp.Exchange))
 	if err != nil {
 		return err
 	}

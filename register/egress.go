@@ -3,36 +3,30 @@ package register
 import (
 	"errors"
 	"fmt"
-	dochttp "github.com/advanced-go/documents/http"
 	"github.com/advanced-go/guidance/resiliency1"
-	"github.com/advanced-go/observation/timeseries1"
 	"github.com/advanced-go/search/google"
 	"github.com/advanced-go/search/yahoo"
 	"github.com/advanced-go/stdlib/controller"
+	"github.com/advanced-go/stdlib/controller2"
 	"github.com/advanced-go/stdlib/core"
-	timehttp "github.com/advanced-go/timeseries/http"
 )
 
-func EgressExchange() error {
-	// Search package's egress
-	err := register(google.RouteName, google.EgressRoute, nil)
-	if err != nil {
-		return err
+func EgressController() error {
+	// Search Google and Yahoo package's egress
+	status := controller2.RegisterControllerFromConfig(google.EgressRoute(), nil)
+	if !status.OK() {
+		return status.Err
 	}
-	err = register(yahoo.RouteName, yahoo.EgressRoute, nil)
-	if err != nil {
-		return err
+	status = controller2.RegisterControllerFromConfig(yahoo.EgressRoute(), nil)
+	if !status.OK() {
+		return status.Err
 	}
-	// Guidance package's egress
-	err = register(resiliency1.RouteName, resiliency1.EgressRoute, dochttp.Exchange)
-	if err != nil {
-		return err
+	// Guidance resiliency1 package's egress
+	status = controller2.RegisterControllerFromConfig(resiliency1.EgressRoute(), nil)
+	if !status.OK() {
+		return status.Err
 	}
-	// Observation package's egress
-	err = register(timeseries1.RouteName, timeseries1.EgressRoute, timehttp.Exchange)
-	if err != nil {
-		return err
-	}
+
 	return nil
 }
 
