@@ -64,7 +64,7 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		fmt2.JsonString(newReq.Method),
 		fmt2.JsonString(o.Host),
 		fmt2.JsonString(from),
-		fmt2.JsonString(uri.UprootAuthority(newReq.URL)),
+		fmt2.JsonString(access.CreateTo(newReq)),
 		fmt2.JsonString(url),
 		fmt2.JsonString(parsed.Query),
 
