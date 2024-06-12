@@ -8,6 +8,8 @@ github.com/advanced-go/guidance v0.0.0-20240609173413-ffd2f517a3c0 h1:19i2NwA5LM
 github.com/advanced-go/guidance v0.0.0-20240609173413-ffd2f517a3c0/go.mod h1:arVnI8Oh3XWy1h6hxTCNok2BqXS2OOInKUWeWesqPUI=
 github.com/advanced-go/guidance v0.0.0-20240612175939-083272603aa2 h1:dOb4jS7cUjuWHgXgc47Rkbeu7JB7SFIuHK2aPrTrxhE=
 github.com/advanced-go/guidance v0.0.0-20240612175939-083272603aa2/go.mod h1:Zmf9JX68EDFpIEbrAdeGFIUGCbuR3gty2HBrjromvHQ=
+github.com/advanced-go/guidance v0.0.0-20240612184607-fda309633e41 h1:mU69jS80AVzOICVqHp4Z92vBII6hMhKv/pTfkhw5w1k=
+github.com/advanced-go/guidance v0.0.0-20240612184607-fda309633e41/go.mod h1:6GqdPnE0Fh6o34pehFuYf9No3NOHlW0NeXEqgp+xy3Y=
 github.com/advanced-go/observation v0.0.0-20240609154438-7b03aaeeb2bf h1:uV1fVeKezEjS6o6namI9yHRaoiNMPRF5VJn1okCXS+E=
 github.com/advanced-go/observation v0.0.0-20240609154438-7b03aaeeb2bf/go.mod h1:WVquMDOtsGZtYsYu+HzG1WqV5+vF/hKwvz8WOGc/fKo=
 github.com/advanced-go/observation v0.0.0-20240609173319-636e749bc89b h1:p7kyl/LEuFnKaBW2ChDPFQ2ksCxtUcecSsZptafshr8=

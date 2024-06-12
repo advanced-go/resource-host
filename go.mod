@@ -4,7 +4,7 @@ go 1.21.4
 
 require (
 	github.com/advanced-go/documents v0.0.0-20240609163903-8b6d69f3a4e9
-	github.com/advanced-go/guidance v0.0.0-20240612175939-083272603aa2
+	github.com/advanced-go/guidance v0.0.0-20240612184607-fda309633e41
 	github.com/advanced-go/observation v0.0.0-20240609173319-636e749bc89b
 	github.com/advanced-go/search v0.0.0-20240612180827-2109eaf92f0d
 	github.com/advanced-go/stdlib v0.0.0-20240612183454-e49cb1b9c272
