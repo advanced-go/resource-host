@@ -13,7 +13,7 @@ import (
 	timehttp "github.com/advanced-go/timeseries/http"
 )
 
-func EgressControllers() error {
+func EgressExchange() error {
 	// Search package's egress
 	err := register(google.RouteName, google.EgressRoute, nil)
 	if err != nil {

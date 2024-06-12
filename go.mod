@@ -7,7 +7,7 @@ require (
 	github.com/advanced-go/guidance v0.0.0-20240609173413-ffd2f517a3c0
 	github.com/advanced-go/observation v0.0.0-20240609173319-636e749bc89b
 	github.com/advanced-go/search v0.0.0-20240609173240-6f5f3588f036
-	github.com/advanced-go/stdlib v0.0.0-20240609152119-8e3aa89b2647
+	github.com/advanced-go/stdlib v0.0.0-20240612133659-188a62ee483e
 	github.com/advanced-go/timeseries v0.0.0-20240609174703-fdb9567c8386
 )
 

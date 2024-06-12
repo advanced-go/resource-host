@@ -10,7 +10,7 @@ import (
 	"github.com/advanced-go/stdlib/host"
 )
 
-func IngressExchanges() error {
+func IngressExchange() error {
 	err := host.RegisterExchange(searchmod.Authority, host.NewAccessLogIntermediary(searchmod.RouteName, searchhttp.Exchange))
 	if err != nil {
 		return err
