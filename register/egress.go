@@ -3,6 +3,7 @@ package register
 import (
 	"errors"
 	"fmt"
+	dochttp "github.com/advanced-go/documents/http"
 	"github.com/advanced-go/guidance/resiliency1"
 	"github.com/advanced-go/search/google"
 	"github.com/advanced-go/search/yahoo"
@@ -22,7 +23,7 @@ func EgressController() error {
 		return status.Err
 	}
 	// Guidance resiliency1 package's egress
-	status = controller2.RegisterControllerFromConfig(resiliency1.EgressRoute(), nil)
+	status = controller2.RegisterControllerFromConfig(resiliency1.EgressRoute(), dochttp.Exchange)
 	if !status.OK() {
 		return status.Err
 	}
